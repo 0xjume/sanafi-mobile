@@ -168,7 +168,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <Plus size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Add Funds</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Add Funds</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -178,7 +178,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <ArrowDownToLine size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Cash Out</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Cash Out</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -188,7 +188,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <ArrowUpDown size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Send</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Send</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -198,7 +198,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <QrCode size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Receive</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Receive</Text>
               </TouchableOpacity>
             </View>
 
@@ -211,7 +211,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <RefreshCw size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Exchange</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Exchange</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -221,7 +221,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <CreditCard size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>My Cards</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>My Cards</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -231,7 +231,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <Gift size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Rewards</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Rewards</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -241,7 +241,7 @@ export default function HomeScreen() {
                 <View style={styles.gridActionIcon}>
                   <Zap size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Pay</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Pay</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -447,7 +447,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 12,
     paddingHorizontal: 2,
-    numberOfLines: 1,
     flexShrink: 1,
   },
 
