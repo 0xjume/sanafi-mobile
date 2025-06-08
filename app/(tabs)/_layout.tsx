@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Chrome as Home, ArrowUpDown as Transfer, MessageCircle, Activity, Settings } from 'lucide-react-native';
+import { Chrome as Home, MessageCircle, Activity, Settings } from 'lucide-react-native';
 import { Platform } from 'react-native';
 
 export default function TabLayout() {
@@ -29,15 +29,6 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({ size, color }) => (
             <Home size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="transfer"
-        options={{
-          title: 'Transfer',
-          tabBarIcon: ({ size, color }) => (
-            <Transfer size={size} color={color} strokeWidth={2} />
           ),
         }}
       />

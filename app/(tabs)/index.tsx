@@ -10,6 +10,7 @@ import { PriceCard } from '@/components/PriceCard';
 import { QRScanner } from '@/components/QRScanner';
 import { CashOutModal } from '../../components/CashOutModal';
 import { AddFundsModal } from '../../components/AddFundsModal';
+import { TransferModal } from '../../components/TransferModal';
 import { mockTokens, mockTransactions, mockPrices } from '@/data/mockData';
 
 export default function HomeScreen() {
@@ -20,6 +21,8 @@ export default function HomeScreen() {
   const [qrScannerVisible, setQrScannerVisible] = useState(false);
   const [cashOutModalVisible, setCashOutModalVisible] = useState(false);
   const [addFundsModalVisible, setAddFundsModalVisible] = useState(false);
+  const [transferModalVisible, setTransferModalVisible] = useState(false);
+  const [transferInitialTab, setTransferInitialTab] = useState<'send' | 'receive'>('send');
 
   // Simulate real-time price updates
   useEffect(() => {
@@ -47,10 +50,12 @@ export default function HomeScreen() {
         setAddFundsModalVisible(true);
         break;
       case 'send':
-        router.push('/transfer');
+        setTransferInitialTab('send');
+        setTransferModalVisible(true);
         break;
       case 'receive':
-        Alert.alert('Receive Money', 'This would open the receive money flow');
+        setTransferInitialTab('receive');
+        setTransferModalVisible(true);
         break;
       case 'exchange':
         Alert.alert('Exchange Tokens', 'This would open the token exchange flow');
@@ -280,6 +285,13 @@ export default function HomeScreen() {
         onAddFunds={handleAddFunds}
         tokens={mockTokens}
         balanceVisible={balanceVisible}
+      />
+
+      {/* Transfer Modal */}
+      <TransferModal
+        visible={transferModalVisible}
+        onClose={() => setTransferModalVisible(false)}
+        initialTab={transferInitialTab}
       />
     </SafeAreaView>
   );
