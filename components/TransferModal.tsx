@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -30,6 +30,13 @@ export function TransferModal({ visible, onClose, initialTab = 'send' }: Transfe
   const [recipient, setRecipient] = useState('');
   const [showBiometric, setShowBiometric] = useState(false);
   const [qrScannerVisible, setQrScannerVisible] = useState(false);
+
+  // Update active tab when initialTab changes or modal becomes visible
+  useEffect(() => {
+    if (visible) {
+      setActiveTab(initialTab);
+    }
+  }, [visible, initialTab]);
 
   const resetModal = () => {
     setActiveTab(initialTab);
