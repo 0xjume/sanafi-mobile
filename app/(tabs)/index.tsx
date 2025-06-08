@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Eye, EyeOff, Plus, QrCode, Bell, RefreshCw, ArrowUpDown, CreditCard, ArrowDownToLine } from 'lucide-react-native';
+import { Eye, EyeOff, Plus, QrCode, Bell, RefreshCw, ArrowUpDown, CreditCard, ArrowDownToLine, Gift, Zap } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { TokenBalanceCard } from '@/components/TokenBalanceCard';
 import { QuickActionCard } from '@/components/QuickActionCard';
@@ -66,6 +66,12 @@ export default function HomeScreen() {
       case 'cash-out':
         setCashOutModalVisible(true);
         break;
+      case 'rewards':
+        Alert.alert('Rewards', 'This would open the rewards and loyalty program');
+        break;
+      case 'pay':
+        Alert.alert('Pay', 'This would open the payment and bill pay features');
+        break;
       default:
         break;
     }
@@ -129,7 +135,7 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Integrated Balance & Actions Card - 3x2 Grid Layout */}
+        {/* Integrated Balance & Actions Card - 4x2 Grid Layout */}
         <View style={styles.balanceActionsCard}>
           {/* Balance Section */}
           <View style={styles.balanceSection}>
@@ -151,16 +157,16 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {/* 3x2 Grid Actions Layout */}
+          {/* 4x2 Grid Actions Layout */}
           <View style={styles.gridActionsContainer}>
-            {/* First Row - 3 items */}
+            {/* First Row - 4 items */}
             <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
                 onPress={() => handleQuickAction('add-funds')}
               >
                 <View style={styles.gridActionIcon}>
-                  <Plus size={18} color="#1B4D3E" strokeWidth={2} />
+                  <Plus size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Add Funds</Text>
               </TouchableOpacity>
@@ -170,7 +176,7 @@ export default function HomeScreen() {
                 onPress={() => handleQuickAction('cash-out')}
               >
                 <View style={styles.gridActionIcon}>
-                  <ArrowDownToLine size={18} color="#1B4D3E" strokeWidth={2} />
+                  <ArrowDownToLine size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Cash Out</Text>
               </TouchableOpacity>
@@ -180,30 +186,30 @@ export default function HomeScreen() {
                 onPress={() => handleQuickAction('send')}
               >
                 <View style={styles.gridActionIcon}>
-                  <ArrowUpDown size={18} color="#1B4D3E" strokeWidth={2} />
+                  <ArrowUpDown size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Send</Text>
               </TouchableOpacity>
-            </View>
 
-            {/* Second Row - 3 items */}
-            <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
                 onPress={() => handleQuickAction('receive')}
               >
                 <View style={styles.gridActionIcon}>
-                  <QrCode size={18} color="#1B4D3E" strokeWidth={2} />
+                  <QrCode size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Receive</Text>
               </TouchableOpacity>
+            </View>
 
+            {/* Second Row - 4 items */}
+            <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
                 onPress={() => handleQuickAction('exchange')}
               >
                 <View style={styles.gridActionIcon}>
-                  <RefreshCw size={18} color="#1B4D3E" strokeWidth={2} />
+                  <RefreshCw size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Exchange</Text>
               </TouchableOpacity>
@@ -213,9 +219,29 @@ export default function HomeScreen() {
                 onPress={() => handleQuickAction('card')}
               >
                 <View style={styles.gridActionIcon}>
-                  <CreditCard size={18} color="#1B4D3E" strokeWidth={2} />
+                  <CreditCard size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>My Cards</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.gridActionItem}
+                onPress={() => handleQuickAction('rewards')}
+              >
+                <View style={styles.gridActionIcon}>
+                  <Gift size={16} color="#1B4D3E" strokeWidth={2} />
+                </View>
+                <Text style={styles.gridActionText}>Rewards</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.gridActionItem}
+                onPress={() => handleQuickAction('pay')}
+              >
+                <View style={styles.gridActionIcon}>
+                  <Zap size={16} color="#1B4D3E" strokeWidth={2} />
+                </View>
+                <Text style={styles.gridActionText}>Pay</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -380,23 +406,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
 
-  // 3x2 Grid Layout Styles
+  // 4x2 Grid Layout Styles
   gridActionsContainer: {
-    gap: 16,
+    gap: 12,
   },
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 12,
+    gap: 8,
   },
   gridActionItem: {
     flex: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 12,
+    padding: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 80,
+    minHeight: 70,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
     elevation: 2,
@@ -406,20 +432,20 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   gridActionIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   gridActionText: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#FFFFFF',
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
-    lineHeight: 13,
+    lineHeight: 12,
   },
 
   section: {
