@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react-native';
 import { useAuth } from '@/hooks/useAuth';
+import { SEOHead } from '@/components/SEOHead';
 
 export default function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true);
@@ -56,103 +57,87 @@ export default function AuthScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* Hero Section */}
-          <View style={styles.heroSection}>
-            <Image
-              source={require('@/assets/images/android-chrome-512x512.png')}
-              style={styles.heroImage}
-              resizeMode="contain"
-            />
-            <View style={styles.logoContainer}>
-              <Text style={styles.logoText}>Sanafi</Text>
-              <Text style={styles.tagline}>AI-Driven Ethical Onchain Banking</Text>
-            </View>
-          </View>
-
-          {/* Auth Form */}
-          <View style={styles.formContainer}>
-            <View style={styles.tabContainer}>
-              <TouchableOpacity
-                style={[styles.tab, isLogin && styles.activeTab]}
-                onPress={() => setIsLogin(true)}
-              >
-                <Text style={[styles.tabText, isLogin && styles.activeTabText]}>
-                  Sign In
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.tab, !isLogin && styles.activeTab]}
-                onPress={() => setIsLogin(false)}
-              >
-                <Text style={[styles.tabText, !isLogin && styles.activeTabText]}>
-                  Sign Up
-                </Text>
-              </TouchableOpacity>
+    <>
+      <SEOHead
+        title={isLogin ? "Sign In - Sanafi Digital Wallet" : "Create Account - Sanafi Digital Wallet"}
+        description={isLogin ? "Sign in to your Sanafi account to access your digital wallet, manage cryptocurrencies, and enjoy AI-driven banking features." : "Create your Sanafi account and join the future of ethical onchain banking. Get started with secure digital payments and AI-powered financial insights."}
+        keywords="sign in, create account, digital wallet login, cryptocurrency account, secure banking, UAE fintech"
+        url="https://sanafi.com/auth"
+      />
+      
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardView}
+        >
+          <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+            {/* Hero Section */}
+            <View style={styles.heroSection}>
+              <Image
+                source={require('@/assets/images/android-chrome-512x512.png')}
+                style={styles.heroImage}
+                resizeMode="contain"
+              />
+              <View style={styles.logoContainer}>
+                <Text style={styles.logoText}>Sanafi</Text>
+                <Text style={styles.tagline}>AI-Driven Ethical Onchain Banking</Text>
+              </View>
             </View>
 
-            <View style={styles.form}>
-              {/* Email Input */}
-              <View style={styles.inputContainer}>
-                <View style={styles.inputWrapper}>
-                  <Mail size={20} color="#666666" strokeWidth={2} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Email address"
-                    placeholderTextColor="#999999"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                </View>
+            {/* Auth Form */}
+            <View style={styles.formContainer}>
+              <View style={styles.tabContainer}>
+                <TouchableOpacity
+                  style={[styles.tab, isLogin && styles.activeTab]}
+                  onPress={() => setIsLogin(true)}
+                >
+                  <Text style={[styles.tabText, isLogin && styles.activeTabText]}>
+                    Sign In
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.tab, !isLogin && styles.activeTab]}
+                  onPress={() => setIsLogin(false)}
+                >
+                  <Text style={[styles.tabText, !isLogin && styles.activeTabText]}>
+                    Sign Up
+                  </Text>
+                </TouchableOpacity>
               </View>
 
-              {/* Password Input */}
-              <View style={styles.inputContainer}>
-                <View style={styles.inputWrapper}>
-                  <Lock size={20} color="#666666" strokeWidth={2} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor="#999999"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={!showPassword}
-                    autoCapitalize="none"
-                  />
-                  <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                    {showPassword ? (
-                      <EyeOff size={20} color="#666666" strokeWidth={2} />
-                    ) : (
-                      <Eye size={20} color="#666666" strokeWidth={2} />
-                    )}
-                  </TouchableOpacity>
+              <View style={styles.form}>
+                {/* Email Input */}
+                <View style={styles.inputContainer}>
+                  <View style={styles.inputWrapper}>
+                    <Mail size={20} color="#666666" strokeWidth={2} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Email address"
+                      placeholderTextColor="#999999"
+                      value={email}
+                      onChangeText={setEmail}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                  </View>
                 </View>
-              </View>
 
-              {/* Confirm Password (Sign Up only) */}
-              {!isLogin && (
+                {/* Password Input */}
                 <View style={styles.inputContainer}>
                   <View style={styles.inputWrapper}>
                     <Lock size={20} color="#666666" strokeWidth={2} />
                     <TextInput
                       style={styles.input}
-                      placeholder="Confirm password"
+                      placeholder="Password"
                       placeholderTextColor="#999999"
-                      value={confirmPassword}
-                      onChangeText={setConfirmPassword}
-                      secureTextEntry={!showConfirmPassword}
+                      value={password}
+                      onChangeText={setPassword}
+                      secureTextEntry={!showPassword}
                       autoCapitalize="none"
                     />
-                    <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                      {showConfirmPassword ? (
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                      {showPassword ? (
                         <EyeOff size={20} color="#666666" strokeWidth={2} />
                       ) : (
                         <Eye size={20} color="#666666" strokeWidth={2} />
@@ -160,65 +145,90 @@ export default function AuthScreen() {
                     </TouchableOpacity>
                   </View>
                 </View>
-              )}
 
-              {/* Forgot Password (Login only) */}
-              {isLogin && (
-                <TouchableOpacity style={styles.forgotPassword}>
-                  <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                {/* Confirm Password (Sign Up only) */}
+                {!isLogin && (
+                  <View style={styles.inputContainer}>
+                    <View style={styles.inputWrapper}>
+                      <Lock size={20} color="#666666" strokeWidth={2} />
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Confirm password"
+                        placeholderTextColor="#999999"
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        secureTextEntry={!showConfirmPassword}
+                        autoCapitalize="none"
+                      />
+                      <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                        {showConfirmPassword ? (
+                          <EyeOff size={20} color="#666666" strokeWidth={2} />
+                        ) : (
+                          <Eye size={20} color="#666666" strokeWidth={2} />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
+
+                {/* Forgot Password (Login only) */}
+                {isLogin && (
+                  <TouchableOpacity style={styles.forgotPassword}>
+                    <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                  </TouchableOpacity>
+                )}
+
+                {/* Auth Button */}
+                <TouchableOpacity
+                  style={[styles.authButton, isLoading && styles.disabledButton]}
+                  onPress={handleAuth}
+                  disabled={isLoading}
+                >
+                  <Text style={styles.authButtonText}>
+                    {isLoading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
+                  </Text>
+                  {!isLoading && <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />}
                 </TouchableOpacity>
-              )}
 
-              {/* Auth Button */}
-              <TouchableOpacity
-                style={[styles.authButton, isLoading && styles.disabledButton]}
-                onPress={handleAuth}
-                disabled={isLoading}
-              >
-                <Text style={styles.authButtonText}>
-                  {isLoading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
-                </Text>
-                {!isLoading && <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />}
-              </TouchableOpacity>
-
-              {/* Terms (Sign Up only) */}
-              {!isLogin && (
-                <Text style={styles.termsText}>
-                  By creating an account, you agree to our{' '}
-                  <Text style={styles.linkText}>Terms of Service</Text> and{' '}
-                  <Text style={styles.linkText}>Privacy Policy</Text>
-                </Text>
-              )}
-            </View>
-          </View>
-
-          {/* Features Preview */}
-          <View style={styles.featuresContainer}>
-            <Text style={styles.featuresTitle}>Why Choose Sanafi?</Text>
-            <View style={styles.featuresList}>
-              <View style={styles.featureItem}>
-                <View style={styles.featureIconContainer}>
-                  <Text style={styles.featureIcon}>🤖</Text>
-                </View>
-                <Text style={styles.featureText}>AI-Driven</Text>
-              </View>
-              <View style={styles.featureItem}>
-                <View style={styles.featureIconContainer}>
-                  <Text style={styles.featureIcon}>✅</Text>
-                </View>
-                <Text style={styles.featureText}>100% Ethical</Text>
-              </View>
-              <View style={styles.featureItem}>
-                <View style={styles.featureIconContainer}>
-                  <Text style={styles.featureIcon}>⛓️</Text>
-                </View>
-                <Text style={styles.featureText}>100% Onchain</Text>
+                {/* Terms (Sign Up only) */}
+                {!isLogin && (
+                  <Text style={styles.termsText}>
+                    By creating an account, you agree to our{' '}
+                    <Text style={styles.linkText}>Terms of Service</Text> and{' '}
+                    <Text style={styles.linkText}>Privacy Policy</Text>
+                  </Text>
+                )}
               </View>
             </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+
+            {/* Features Preview */}
+            <View style={styles.featuresContainer}>
+              <Text style={styles.featuresTitle}>Why Choose Sanafi?</Text>
+              <View style={styles.featuresList}>
+                <View style={styles.featureItem}>
+                  <View style={styles.featureIconContainer}>
+                    <Text style={styles.featureIcon}>🤖</Text>
+                  </View>
+                  <Text style={styles.featureText}>AI-Driven</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <View style={styles.featureIconContainer}>
+                    <Text style={styles.featureIcon}>✅</Text>
+                  </View>
+                  <Text style={styles.featureText}>100% Ethical</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <View style={styles.featureIconContainer}>
+                    <Text style={styles.featureIcon}>⛓️</Text>
+                  </View>
+                  <Text style={styles.featureText}>100% Onchain</Text>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </>
   );
 }
 

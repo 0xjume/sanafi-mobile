@@ -1,24 +1,57 @@
 {
   "expo": {
-    "name": "bolt-expo-nativewind",
-    "slug": "bolt-expo-nativewind",
+    "name": "Sanafi - AI-Driven Ethical Onchain Banking",
+    "slug": "sanafi-wallet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "sanafi",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "description": "Sanafi is the world's first AI-driven ethical onchain banking platform. Experience secure digital payments, multi-currency support, and intelligent financial management with UAE Central Bank compliance.",
+    "keywords": ["digital wallet", "cryptocurrency", "blockchain", "UAE banking", "fintech", "AI banking", "ethical finance", "onchain banking", "digital payments", "multi-currency"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sanafi.wallet"
+    },
+    "android": {
+      "package": "com.sanafi.wallet",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#1B4D3E"
+      }
     },
     "web": {
       "bundler": "metro",
       "output": "single",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "name": "Sanafi - AI-Driven Ethical Onchain Banking",
+      "shortName": "Sanafi",
+      "description": "The world's first AI-driven ethical onchain banking platform. Secure, compliant, and intelligent financial management.",
+      "themeColor": "#1B4D3E",
+      "backgroundColor": "#F0EADA",
+      "startUrl": "/",
+      "display": "standalone",
+      "orientation": "portrait"
     },
-    "plugins": ["expo-router", "expo-font", "expo-web-browser"],
+    "plugins": [
+      "expo-router", 
+      "expo-font", 
+      "expo-web-browser",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Sanafi to access your camera to scan QR codes for payments and transactions."
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      }
     }
   }
 }
