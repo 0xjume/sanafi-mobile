@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, Gift, Star, Trophy, Target, Zap, Coffee, ShoppingBag, Fuel, Utensils, Plane, Gamepad2, Crown, Clock, TrendingUp, Award, Sparkles, CheckCircle } from 'lucide-react-native';
+import { ArrowLeft, Gift, Star, Trophy, Target, Zap, Coffee, ShoppingBag, Fuel, Utensils, Plane, Gamepad2, Crown, Clock, TrendingUp, Award, Sparkles, CircleCheck as CheckCircle } from 'lucide-react-native';
 
 const { width } = Dimensions.get('window');
 
