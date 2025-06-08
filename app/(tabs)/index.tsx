@@ -70,7 +70,7 @@ export default function HomeScreen() {
         Alert.alert('Rewards', 'This would open the rewards and loyalty program');
         break;
       case 'pay':
-        Alert.alert('Pay', 'This would open the payment and bill pay features');
+        setQrScannerVisible(true);
         break;
       default:
         break;
@@ -78,17 +78,17 @@ export default function HomeScreen() {
   };
 
   const handleQRScan = (data: string) => {
-    // Handle the scanned QR code data
+    // Handle the scanned QR code data for payment
     Alert.alert(
-      'QR Code Scanned',
-      `Scanned data: ${data}`,
+      'Payment QR Code Scanned',
+      `Scanned payment data: ${data}`,
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Use Address',
+          text: 'Proceed to Pay',
           onPress: () => {
-            // Here you would typically navigate to send screen with the address
-            Alert.alert('Success', 'Address has been set for transfer');
+            // Here you would typically navigate to payment screen with the scanned data
+            Alert.alert('Payment', 'Opening payment flow with scanned merchant data');
           },
         },
       ]
