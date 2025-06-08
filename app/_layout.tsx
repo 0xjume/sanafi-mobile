@@ -35,6 +35,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="tokens/[symbol]" options={{ headerShown: false }} />
         <Stack.Screen name="card" options={{ headerShown: false }} />
+        <Stack.Screen name="rewards" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

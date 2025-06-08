@@ -67,7 +67,7 @@ export default function HomeScreen() {
         setCashOutModalVisible(true);
         break;
       case 'rewards':
-        Alert.alert('Rewards', 'This would open the rewards and loyalty program');
+        router.push('/rewards');
         break;
       case 'pay':
         setQrScannerVisible(true);
