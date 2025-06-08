@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react-native';
+import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react-native';
 import { useAuth } from '@/hooks/useAuth';
 import { SEOHead } from '@/components/SEOHead';
 
@@ -26,17 +26,135 @@ export default function AuthScreen() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
+  // Validation states
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+  
   const router = useRouter();
   const { login } = useAuth();
 
-  const handleAuth = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
-      return;
+  // Email validation
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      return 'Email is required';
     }
+    if (!emailRegex.test(email)) {
+      return 'Please enter a valid email address';
+    }
+    return '';
+  };
 
-    if (!isLogin && password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+  // Password validation
+  const validatePassword = (password: string) => {
+    if (!password) {
+      return 'Password is required';
+    }
+    if (password.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+    if (!/(?=.*[a-z])/.test(password)) {
+      return 'Password must contain at least one lowercase letter';
+    }
+    if (!/(?=.*[A-Z])/.test(password)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+    if (!/(?=.*\d)/.test(password)) {
+      return 'Password must contain at least one number';
+    }
+    return '';
+  };
+
+  // Confirm password validation
+  const validateConfirmPassword = (confirmPassword: string, password: string) => {
+    if (!confirmPassword) {
+      return 'Please confirm your password';
+    }
+    if (confirmPassword !== password) {
+      return 'Passwords do not match';
+    }
+    return '';
+  };
+
+  // Handle email change
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (touched.email) {
+      setEmailError(validateEmail(value));
+    }
+  };
+
+  // Handle password change
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    if (touched.password) {
+      setPasswordError(validatePassword(value));
+    }
+    // Also validate confirm password if it's been touched
+    if (touched.confirmPassword && !isLogin) {
+      setConfirmPasswordError(validateConfirmPassword(confirmPassword, value));
+    }
+  };
+
+  // Handle confirm password change
+  const handleConfirmPasswordChange = (value: string) => {
+    setConfirmPassword(value);
+    if (touched.confirmPassword) {
+      setConfirmPasswordError(validateConfirmPassword(value, password));
+    }
+  };
+
+  // Handle field blur (when user leaves the field)
+  const handleBlur = (field: 'email' | 'password' | 'confirmPassword') => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+    
+    switch (field) {
+      case 'email':
+        setEmailError(validateEmail(email));
+        break;
+      case 'password':
+        setPasswordError(validatePassword(password));
+        break;
+      case 'confirmPassword':
+        setConfirmPasswordError(validateConfirmPassword(confirmPassword, password));
+        break;
+    }
+  };
+
+  // Check if form is valid
+  const isFormValid = () => {
+    const emailValid = validateEmail(email) === '';
+    const passwordValid = validatePassword(password) === '';
+    const confirmPasswordValid = isLogin || validateConfirmPassword(confirmPassword, password) === '';
+    
+    return emailValid && passwordValid && confirmPasswordValid;
+  };
+
+  const handleAuth = async () => {
+    // Mark all fields as touched to show validation errors
+    setTouched({
+      email: true,
+      password: true,
+      confirmPassword: true,
+    });
+
+    // Validate all fields
+    const emailValidationError = validateEmail(email);
+    const passwordValidationError = validatePassword(password);
+    const confirmPasswordValidationError = !isLogin ? validateConfirmPassword(confirmPassword, password) : '';
+
+    setEmailError(emailValidationError);
+    setPasswordError(passwordValidationError);
+    setConfirmPasswordError(confirmPasswordValidationError);
+
+    // If there are validation errors, don't proceed
+    if (emailValidationError || passwordValidationError || confirmPasswordValidationError) {
       return;
     }
 
@@ -47,13 +165,37 @@ export default function AuthScreen() {
       if (success) {
         router.replace('/onboarding');
       } else {
-        Alert.alert('Error', 'Invalid credentials');
+        Alert.alert('Error', 'Invalid credentials. Please check your email and password.');
       }
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong');
+      Alert.alert('Error', 'Something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Reset validation when switching between login/signup
+  const handleTabSwitch = (loginMode: boolean) => {
+    setIsLogin(loginMode);
+    setTouched({
+      email: false,
+      password: false,
+      confirmPassword: false,
+    });
+    setEmailError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+  };
+
+  const renderValidationError = (error: string) => {
+    if (!error) return null;
+    
+    return (
+      <View style={styles.errorContainer}>
+        <AlertCircle size={16} color="#EF4444" strokeWidth={2} />
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
   };
 
   return (
@@ -89,7 +231,7 @@ export default function AuthScreen() {
               <View style={styles.tabContainer}>
                 <TouchableOpacity
                   style={[styles.tab, isLogin && styles.activeTab]}
-                  onPress={() => setIsLogin(true)}
+                  onPress={() => handleTabSwitch(true)}
                 >
                   <Text style={[styles.tabText, isLogin && styles.activeTabText]}>
                     Sign In
@@ -97,7 +239,7 @@ export default function AuthScreen() {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.tab, !isLogin && styles.activeTab]}
-                  onPress={() => setIsLogin(false)}
+                  onPress={() => handleTabSwitch(false)}
                 >
                   <Text style={[styles.tabText, !isLogin && styles.activeTabText]}>
                     Sign Up
@@ -108,31 +250,40 @@ export default function AuthScreen() {
               <View style={styles.form}>
                 {/* Email Input */}
                 <View style={styles.inputContainer}>
-                  <View style={styles.inputWrapper}>
+                  <View style={[
+                    styles.inputWrapper,
+                    emailError && touched.email && styles.inputError
+                  ]}>
                     <Mail size={20} color="#666666" strokeWidth={2} />
                     <TextInput
                       style={styles.input}
                       placeholder="Email address"
                       placeholderTextColor="#999999"
                       value={email}
-                      onChangeText={setEmail}
+                      onChangeText={handleEmailChange}
+                      onBlur={() => handleBlur('email')}
                       keyboardType="email-address"
                       autoCapitalize="none"
                       autoCorrect={false}
                     />
                   </View>
+                  {renderValidationError(emailError)}
                 </View>
 
                 {/* Password Input */}
                 <View style={styles.inputContainer}>
-                  <View style={styles.inputWrapper}>
+                  <View style={[
+                    styles.inputWrapper,
+                    passwordError && touched.password && styles.inputError
+                  ]}>
                     <Lock size={20} color="#666666" strokeWidth={2} />
                     <TextInput
                       style={styles.input}
                       placeholder="Password"
                       placeholderTextColor="#999999"
                       value={password}
-                      onChangeText={setPassword}
+                      onChangeText={handlePasswordChange}
+                      onBlur={() => handleBlur('password')}
                       secureTextEntry={!showPassword}
                       autoCapitalize="none"
                     />
@@ -144,19 +295,33 @@ export default function AuthScreen() {
                       )}
                     </TouchableOpacity>
                   </View>
+                  {renderValidationError(passwordError)}
+                  
+                  {/* Password requirements hint for signup */}
+                  {!isLogin && !passwordError && touched.password && (
+                    <View style={styles.passwordHint}>
+                      <Text style={styles.passwordHintText}>
+                        Password must contain at least 8 characters with uppercase, lowercase, and numbers
+                      </Text>
+                    </View>
+                  )}
                 </View>
 
                 {/* Confirm Password (Sign Up only) */}
                 {!isLogin && (
                   <View style={styles.inputContainer}>
-                    <View style={styles.inputWrapper}>
+                    <View style={[
+                      styles.inputWrapper,
+                      confirmPasswordError && touched.confirmPassword && styles.inputError
+                    ]}>
                       <Lock size={20} color="#666666" strokeWidth={2} />
                       <TextInput
                         style={styles.input}
                         placeholder="Confirm password"
                         placeholderTextColor="#999999"
                         value={confirmPassword}
-                        onChangeText={setConfirmPassword}
+                        onChangeText={handleConfirmPasswordChange}
+                        onBlur={() => handleBlur('confirmPassword')}
                         secureTextEntry={!showConfirmPassword}
                         autoCapitalize="none"
                       />
@@ -168,6 +333,7 @@ export default function AuthScreen() {
                         )}
                       </TouchableOpacity>
                     </View>
+                    {renderValidationError(confirmPasswordError)}
                   </View>
                 )}
 
@@ -180,9 +346,12 @@ export default function AuthScreen() {
 
                 {/* Auth Button */}
                 <TouchableOpacity
-                  style={[styles.authButton, isLoading && styles.disabledButton]}
+                  style={[
+                    styles.authButton,
+                    (isLoading || !isFormValid()) && styles.disabledButton
+                  ]}
                   onPress={handleAuth}
-                  disabled={isLoading}
+                  disabled={isLoading || !isFormValid()}
                 >
                   <Text style={styles.authButtonText}>
                     {isLoading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
@@ -321,12 +490,39 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
+  inputError: {
+    borderColor: '#EF4444',
+    backgroundColor: '#FEF2F2',
+  },
   input: {
     flex: 1,
     fontSize: 16,
     color: '#1B4D3E',
     fontFamily: 'Poppins-Regular',
     marginLeft: 12,
+  },
+  errorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+    paddingHorizontal: 4,
+    gap: 6,
+  },
+  errorText: {
+    fontSize: 12,
+    color: '#EF4444',
+    fontFamily: 'Poppins-Regular',
+    flex: 1,
+  },
+  passwordHint: {
+    marginTop: 8,
+    paddingHorizontal: 4,
+  },
+  passwordHintText: {
+    fontSize: 12,
+    color: '#666666',
+    fontFamily: 'Poppins-Regular',
+    lineHeight: 16,
   },
   forgotPassword: {
     alignSelf: 'flex-end',
@@ -349,7 +545,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   disabledButton: {
-    opacity: 0.6,
+    opacity: 0.5,
   },
   authButtonText: {
     fontSize: 16,
