@@ -31,7 +31,7 @@ export function SEOHead({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       
-      {noIndex && <meta name="robots" content="noindex, nofollow" />}
+      {noIndex && <meta name="robots\" content="noindex, nofollow" />}
       
       {/* Open Graph */}
       <meta property="og:title" content={title} />
