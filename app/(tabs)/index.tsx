@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Eye, EyeOff, Plus, QrCode, Bell, RefreshCw, ArrowUpDown, CreditCard, ArrowDownToLine, Gift, Zap } from 'lucide-react-native';
+import { Eye, EyeOff, Plus, QrCode, Bell, RefreshCw, ArrowUpDown, ArrowDownToLine, Gift, Zap } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { TokenBalanceCard } from '@/components/TokenBalanceCard';
 import { QuickActionCard } from '@/components/QuickActionCard';
@@ -60,9 +60,6 @@ export default function HomeScreen() {
       case 'exchange':
         Alert.alert('Exchange Tokens', 'This would open the token exchange flow');
         break;
-      case 'card':
-        router.push('/card');
-        break;
       case 'cash-out':
         setCashOutModalVisible(true);
         break;
@@ -70,7 +67,17 @@ export default function HomeScreen() {
         Alert.alert('Rewards', 'This would open the rewards and loyalty program');
         break;
       case 'pay':
-        Alert.alert('Pay', 'This would open the payment and bill pay features');
+        // Enhanced Pay functionality - includes cards, bills, and payments
+        Alert.alert(
+          'Pay & Cards',
+          'Choose an option:',
+          [
+            { text: 'My Cards', onPress: () => router.push('/card') },
+            { text: 'Pay Bills', onPress: () => Alert.alert('Pay Bills', 'This would open bill payment features') },
+            { text: 'QR Pay', onPress: () => setQrScannerVisible(true) },
+            { text: 'Cancel', style: 'cancel' },
+          ]
+        );
         break;
       default:
         break;
@@ -135,7 +142,7 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Integrated Balance & Actions Card - 4x2 Grid Layout */}
+        {/* Integrated Balance & Actions Card - 3x2 Grid Layout */}
         <View style={styles.balanceActionsCard}>
           {/* Balance Section */}
           <View style={styles.balanceSection}>
@@ -157,16 +164,16 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {/* 4x2 Grid Actions Layout */}
+          {/* 3x2 Grid Actions Layout */}
           <View style={styles.gridActionsContainer}>
-            {/* First Row - 4 items */}
+            {/* First Row - 3 items */}
             <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
                 onPress={() => handleQuickAction('add-funds')}
               >
                 <View style={styles.gridActionIcon}>
-                  <Plus size={16} color="#1B4D3E" strokeWidth={2} />
+                  <Plus size={18} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Add Funds</Text>
               </TouchableOpacity>
@@ -176,7 +183,7 @@ export default function HomeScreen() {
                 onPress={() => handleQuickAction('cash-out')}
               >
                 <View style={styles.gridActionIcon}>
-                  <ArrowDownToLine size={16} color="#1B4D3E" strokeWidth={2} />
+                  <ArrowDownToLine size={18} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Cash Out</Text>
               </TouchableOpacity>
@@ -186,42 +193,32 @@ export default function HomeScreen() {
                 onPress={() => handleQuickAction('send')}
               >
                 <View style={styles.gridActionIcon}>
-                  <ArrowUpDown size={16} color="#1B4D3E" strokeWidth={2} />
+                  <ArrowUpDown size={18} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Send</Text>
               </TouchableOpacity>
+            </View>
 
+            {/* Second Row - 3 items */}
+            <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
                 onPress={() => handleQuickAction('receive')}
               >
                 <View style={styles.gridActionIcon}>
-                  <QrCode size={16} color="#1B4D3E" strokeWidth={2} />
+                  <QrCode size={18} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Receive</Text>
               </TouchableOpacity>
-            </View>
 
-            {/* Second Row - 4 items */}
-            <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
                 onPress={() => handleQuickAction('exchange')}
               >
                 <View style={styles.gridActionIcon}>
-                  <RefreshCw size={16} color="#1B4D3E" strokeWidth={2} />
+                  <RefreshCw size={18} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Exchange</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={styles.gridActionItem}
-                onPress={() => handleQuickAction('card')}
-              >
-                <View style={styles.gridActionIcon}>
-                  <CreditCard size={16} color="#1B4D3E" strokeWidth={2} />
-                </View>
-                <Text style={styles.gridActionText}>My Cards</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -229,19 +226,23 @@ export default function HomeScreen() {
                 onPress={() => handleQuickAction('rewards')}
               >
                 <View style={styles.gridActionIcon}>
-                  <Gift size={16} color="#1B4D3E" strokeWidth={2} />
+                  <Gift size={18} color="#1B4D3E" strokeWidth={2} />
                 </View>
                 <Text style={styles.gridActionText}>Rewards</Text>
               </TouchableOpacity>
+            </View>
 
+            {/* Third Row - 1 centered item (Pay with enhanced functionality) */}
+            <View style={styles.gridRowCentered}>
               <TouchableOpacity 
-                style={styles.gridActionItem}
+                style={[styles.gridActionItem, styles.enhancedPayButton]}
                 onPress={() => handleQuickAction('pay')}
               >
-                <View style={styles.gridActionIcon}>
-                  <Zap size={16} color="#1B4D3E" strokeWidth={2} />
+                <View style={[styles.gridActionIcon, styles.enhancedPayIcon]}>
+                  <Zap size={20} color="#FFFFFF" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText}>Pay</Text>
+                <Text style={[styles.gridActionText, styles.enhancedPayText]}>Pay & Cards</Text>
+                <Text style={styles.enhancedPaySubtext}>Bills • QR • Cards</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -406,13 +407,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
 
-  // 4x2 Grid Layout Styles
+  // 3x2 Grid Layout Styles with enhanced Pay button
   gridActionsContainer: {
     gap: 12,
   },
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 8,
+  },
+  gridRowCentered: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     gap: 8,
   },
   gridActionItem: {
@@ -446,6 +452,34 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
     lineHeight: 12,
+  },
+
+  // Enhanced Pay Button Styles
+  enhancedPayButton: {
+    backgroundColor: 'rgba(245, 158, 11, 0.9)', // Golden background
+    borderColor: 'rgba(245, 158, 11, 0.3)',
+    minHeight: 85,
+    maxWidth: 120,
+    paddingVertical: 16,
+  },
+  enhancedPayIcon: {
+    backgroundColor: '#F59E0B', // Solid golden background
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginBottom: 8,
+  },
+  enhancedPayText: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginBottom: 2,
+  },
+  enhancedPaySubtext: {
+    fontSize: 8,
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
+    lineHeight: 10,
   },
 
   section: {
