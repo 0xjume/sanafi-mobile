@@ -446,6 +446,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
     lineHeight: 12,
+    paddingHorizontal: 2,
+    numberOfLines: 1,
+    flexShrink: 1,
   },
 
   section: {
