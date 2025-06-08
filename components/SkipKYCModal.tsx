@@ -35,15 +35,21 @@ export function SkipKYCModal({ visible, onConfirm, onCancel }: SkipKYCModalProps
 
             <View style={styles.limitationsList}>
               <View style={styles.limitationItem}>
-                <View style={styles.bullet} />
+                <View style={styles.bullet}>
+                  <Text style={styles.bulletText}>•</Text>
+                </View>
                 <Text style={styles.limitationText}>Lower transaction limits</Text>
               </View>
               <View style={styles.limitationItem}>
-                <View style={styles.bullet} />
+                <View style={styles.bullet}>
+                  <Text style={styles.bulletText}>•</Text>
+                </View>
                 <Text style={styles.limitationText}>Restricted international transfers</Text>
               </View>
               <View style={styles.limitationItem}>
-                <View style={styles.bullet} />
+                <View style={styles.bullet}>
+                  <Text style={styles.bulletText}>•</Text>
+                </View>
                 <Text style={styles.limitationText}>Limited access to premium features</Text>
               </View>
             </View>
@@ -136,6 +142,14 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: '#F59E0B',
     marginRight: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bulletText: {
+    fontSize: 12,
+    color: '#F59E0B',
+    fontFamily: 'Poppins-Bold',
+    textAlign: 'center',
   },
   limitationText: {
     fontSize: 14,
