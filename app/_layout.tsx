@@ -265,6 +265,7 @@ export default function RootLayout() {
         <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="kyc" options={{ headerShown: false }} />
+        <Stack.Screen name="legal" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="tokens/[symbol]" options={{ headerShown: false }} />
         <Stack.Screen name="card" options={{ headerShown: false }} />
