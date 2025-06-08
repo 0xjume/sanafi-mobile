@@ -134,7 +134,7 @@ export function CashOutModal({ visible, onClose, onCashOut, tokens, balanceVisib
     <View style={styles.stepContent}>
       <View style={styles.stepHeader}>
         <ArrowDownToLine size={32} color="#1B4D3E" strokeWidth={2} />
-        <Text style={styles.stepTitle}>Cash Out to Bank</Text>
+        <Text style={styles.stepTitle}>Withdraw to Bank</Text>
         <Text style={styles.stepDescription}>
           Withdraw your digital currency to your bank account
         </Text>
@@ -143,7 +143,7 @@ export function CashOutModal({ visible, onClose, onCashOut, tokens, balanceVisib
       {renderTokenSelector()}
 
       <View style={styles.amountSection}>
-        <Text style={styles.sectionLabel}>Amount to Cash Out</Text>
+        <Text style={styles.sectionLabel}>Amount to Withdraw</Text>
         <View style={styles.amountInputContainer}>
           <TextInput
             style={styles.amountInput}
@@ -246,9 +246,9 @@ export function CashOutModal({ visible, onClose, onCashOut, tokens, balanceVisib
     <View style={styles.stepContent}>
       <View style={styles.stepHeader}>
         <Shield size={32} color="#1B4D3E" strokeWidth={2} />
-        <Text style={styles.stepTitle}>Confirm Cash Out</Text>
+        <Text style={styles.stepTitle}>Confirm Withdrawal</Text>
         <Text style={styles.stepDescription}>
-          Please review your cash out details
+          Please review your withdrawal details
         </Text>
       </View>
 
@@ -328,7 +328,7 @@ export function CashOutModal({ visible, onClose, onCashOut, tokens, balanceVisib
       case 'bank':
         return 'Continue';
       case 'confirm':
-        return 'Confirm Cash Out';
+        return 'Confirm Withdrawal';
       default:
         return 'Continue';
     }

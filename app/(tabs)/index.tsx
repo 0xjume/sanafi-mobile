@@ -46,7 +46,7 @@ export default function HomeScreen() {
 
   const handleQuickAction = (action: string) => {
     switch (action) {
-      case 'add-funds':
+      case 'deposit':
         setAddFundsModalVisible(true);
         break;
       case 'send':
@@ -60,10 +60,10 @@ export default function HomeScreen() {
       case 'exchange':
         Alert.alert('Exchange Tokens', 'This would open the token exchange flow');
         break;
-      case 'card':
+      case 'cards':
         router.push('/card');
         break;
-      case 'cash-out':
+      case 'withdraw':
         setCashOutModalVisible(true);
         break;
       case 'rewards':
@@ -98,7 +98,7 @@ export default function HomeScreen() {
   const handleCashOut = (amount: number, token: string, bankAccount: string) => {
     // Simulate cash out process
     Alert.alert(
-      'Cash Out Initiated',
+      'Withdrawal Initiated',
       `AED ${amount.toFixed(2)} will be transferred to your ${bankAccount} account within 1-2 business days.`,
       [{ text: 'OK' }]
     );
@@ -107,7 +107,7 @@ export default function HomeScreen() {
   const handleAddFunds = (amount: number, token: string, paymentMethod: string) => {
     // Simulate add funds process
     Alert.alert(
-      'Add Funds Initiated',
+      'Deposit Initiated',
       `AED ${amount.toFixed(2)} will be added to your ${token} balance using ${paymentMethod}.`,
       [{ text: 'OK' }]
     );
@@ -163,22 +163,22 @@ export default function HomeScreen() {
             <View style={styles.gridRow}>
               <TouchableOpacity 
                 style={styles.gridActionItem}
-                onPress={() => handleQuickAction('add-funds')}
+                onPress={() => handleQuickAction('deposit')}
               >
                 <View style={styles.gridActionIcon}>
                   <Plus size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText} numberOfLines={1}>Add Funds</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Deposit</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
                 style={styles.gridActionItem}
-                onPress={() => handleQuickAction('cash-out')}
+                onPress={() => handleQuickAction('withdraw')}
               >
                 <View style={styles.gridActionIcon}>
                   <ArrowDownToLine size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText} numberOfLines={1}>Cash Out</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Withdraw</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
@@ -216,12 +216,12 @@ export default function HomeScreen() {
 
               <TouchableOpacity 
                 style={styles.gridActionItem}
-                onPress={() => handleQuickAction('card')}
+                onPress={() => handleQuickAction('cards')}
               >
                 <View style={styles.gridActionIcon}>
                   <CreditCard size={16} color="#1B4D3E" strokeWidth={2} />
                 </View>
-                <Text style={styles.gridActionText} numberOfLines={1}>My Cards</Text>
+                <Text style={styles.gridActionText} numberOfLines={1}>Cards</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 

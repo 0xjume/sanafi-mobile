@@ -130,7 +130,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
 
   const renderTokenSelector = () => (
     <View style={styles.tokenSelector}>
-      <Text style={styles.sectionLabel}>Select Token to Add</Text>
+      <Text style={styles.sectionLabel}>Select Token to Deposit</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tokenList}>
         {tokens.map((token) => (
           <TouchableOpacity
@@ -154,7 +154,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
     <View style={styles.stepContent}>
       <View style={styles.stepHeader}>
         <Plus size={32} color="#1B4D3E" strokeWidth={2} />
-        <Text style={styles.stepTitle}>Add Funds</Text>
+        <Text style={styles.stepTitle}>Deposit Funds</Text>
         <Text style={styles.stepDescription}>
           Add money to your digital wallet from various sources
         </Text>
@@ -163,7 +163,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
       {renderTokenSelector()}
 
       <View style={styles.amountSection}>
-        <Text style={styles.sectionLabel}>Amount to Add</Text>
+        <Text style={styles.sectionLabel}>Amount to Deposit</Text>
         <View style={styles.amountInputContainer}>
           <TextInput
             style={styles.amountInput}
@@ -206,7 +206,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
       </View>
 
       <View style={styles.benefitsInfo}>
-        <Text style={styles.benefitsTitle}>Why Add Funds?</Text>
+        <Text style={styles.benefitsTitle}>Why Deposit Funds?</Text>
         <View style={styles.benefitsList}>
           <View style={styles.benefitItem}>
             <Text style={styles.benefitIcon}>⚡</Text>
@@ -231,7 +231,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
         <CreditCard size={32} color="#1B4D3E" strokeWidth={2} />
         <Text style={styles.stepTitle}>Payment Method</Text>
         <Text style={styles.stepDescription}>
-          Choose how you'd like to add funds to your wallet
+          Choose how you'd like to deposit funds to your wallet
         </Text>
       </View>
 
@@ -288,7 +288,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
       <View style={styles.stepContent}>
         <View style={styles.stepHeader}>
           <Shield size={32} color="#1B4D3E" strokeWidth={2} />
-          <Text style={styles.stepTitle}>Confirm Add Funds</Text>
+          <Text style={styles.stepTitle}>Confirm Deposit</Text>
           <Text style={styles.stepDescription}>
             Please review your transaction details
           </Text>
@@ -382,7 +382,7 @@ export function AddFundsModal({ visible, onClose, onAddFunds, tokens, balanceVis
       case 'method':
         return 'Continue';
       case 'confirm':
-        return 'Confirm Add Funds';
+        return 'Confirm Deposit';
       default:
         return 'Continue';
     }

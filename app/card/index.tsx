@@ -409,7 +409,7 @@ export default function CardScreen() {
           <ArrowLeft size={24} color="#1B4D3E" strokeWidth={2} />
         </TouchableOpacity>
         
-        <Text style={styles.headerTitle}>My Cards</Text>
+        <Text style={styles.headerTitle}>Cards</Text>
         
         <View style={styles.headerActions}>
           <TouchableOpacity onPress={() => setBalanceVisible(!balanceVisible)}>
