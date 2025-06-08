@@ -9,6 +9,7 @@ import { RecentTransactionCard } from '@/components/RecentTransactionCard';
 import { PriceCard } from '@/components/PriceCard';
 import { QRScanner } from '@/components/QRScanner';
 import { CashOutModal } from '../../components/CashOutModal';
+import { AddFundsModal } from '../../components/AddFundsModal';
 import { mockTokens, mockTransactions, mockPrices } from '@/data/mockData';
 
 export default function HomeScreen() {
@@ -18,6 +19,7 @@ export default function HomeScreen() {
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [qrScannerVisible, setQrScannerVisible] = useState(false);
   const [cashOutModalVisible, setCashOutModalVisible] = useState(false);
+  const [addFundsModalVisible, setAddFundsModalVisible] = useState(false);
 
   // Simulate real-time price updates
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function HomeScreen() {
   const handleQuickAction = (action: string) => {
     switch (action) {
       case 'add-funds':
-        Alert.alert('Add Funds', 'This would open the add funds flow');
+        setAddFundsModalVisible(true);
         break;
       case 'send':
         router.push('/transfer');
@@ -87,6 +89,15 @@ export default function HomeScreen() {
     Alert.alert(
       'Cash Out Initiated',
       `AED ${amount.toFixed(2)} will be transferred to your ${bankAccount} account within 1-2 business days.`,
+      [{ text: 'OK' }]
+    );
+  };
+
+  const handleAddFunds = (amount: number, token: string, paymentMethod: string) => {
+    // Simulate add funds process
+    Alert.alert(
+      'Add Funds Initiated',
+      `AED ${amount.toFixed(2)} will be added to your ${token} balance using ${paymentMethod}.`,
       [{ text: 'OK' }]
     );
   };
@@ -258,6 +269,15 @@ export default function HomeScreen() {
         visible={cashOutModalVisible}
         onClose={() => setCashOutModalVisible(false)}
         onCashOut={handleCashOut}
+        tokens={mockTokens}
+        balanceVisible={balanceVisible}
+      />
+
+      {/* Add Funds Modal */}
+      <AddFundsModal
+        visible={addFundsModalVisible}
+        onClose={() => setAddFundsModalVisible(false)}
+        onAddFunds={handleAddFunds}
         tokens={mockTokens}
         balanceVisible={balanceVisible}
       />
